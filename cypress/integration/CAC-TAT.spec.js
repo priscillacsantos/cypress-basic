@@ -38,6 +38,7 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         
     })
 
+
     it('exibe mensagem de erro ao submeter o formulário com um email com formatação inválida', function() {
         cy.clock();
 
@@ -52,6 +53,7 @@ describe('Central de Atendimento ao Cliente TAT', function() {
 
         cy.get('.error').should('not.be.visible');
     })
+    
 
     it('validar que, se um valor não-numérico for digitado, seu valor continuará vazio', function() {
         cy.get('#phone')
@@ -204,6 +206,52 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         .click()
 
       cy.contains('Talking About Testing').should('be.visible')
+    })
+
+    it('exibe e esconde as mensagens de sucesso e erro usando o .invoke', function() {
+      cy.get('.success')
+        .should('not.be.visible')
+        .invoke('show')
+        .should('be.visible')
+        .and('contain', 'Mensagem enviada com sucesso.')
+        .invoke('hide')
+        .should('not.be.visible')
+
+      cy.get('.error')
+        .should('not.be.visible')
+        .invoke('show')
+        .should('be.visible')
+        .and('contain', 'Valide os campos obrigatórios!')
+        .invoke('hide')
+        .should('not.be.visible')
+    })
+
+    it('preenche a area de texto usando o comando invoke', function() {
+      const longText = Cypress._.repeat('012345679', 10)
+      cy.get('textarea')
+        .invoke('val', longText)
+        .should('have.value', longText)
+    })
+    
+    it('faz uma requisição HTTP', function() {
+      cy.request('https://cac-tat.s3.eu-central-1.amazonaws.com/index.html')
+        .should(function(response) {
+          const { status, statusText, body } = response
+          expect(status).to.equal(200)
+          expect(statusText).to.equal('OK')
+          expect(body).to.include('CAC TAT')
+        })
+    })
+
+    it('desafio(encontre o gato)', function() {
+      cy.get('#cat')
+        .should('not.be.visible')
+        .invoke('show')
+        .should('be.visible')
+      cy.get('#title')
+        .invoke('text', 'CAT TAT')
+      cy.get('#subtitle')
+        .invoke('text', 'I love cats')
     })
 
   })
