@@ -1,6 +1,6 @@
-# Testes automatizados com Cypress - Básico
+# Automated Testing with Cypress - Basics
 
-Sample project for the basic course of the Talking About Testing online school.
+Sample project.
 
 
 ## Pre-requirements

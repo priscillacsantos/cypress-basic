@@ -22,22 +22,35 @@ describe('Central de Atendimento ao Cliente TAT', function() {
 
     it('preenche os campos obrigatórios e envia o formulário', function() {
         const longText = 'hi pecial character sequw, home, end, insert, pageUp, pageDownalt, option, ctrl, control, meta, command, cmd, shift If you want to skip parsing special character sequences and type the text exactly as written';
+        
+        cy.clock();
+        
         cy.get('input[id="firstName"]').type('Ana');
         cy.get('input[id="lastName"]').type('Mala');
         cy.get('input[id="email"]').type('e@e.com');
         cy.get('textarea[id="open-text-area"]').type(longText, {delay: 0});
         cy.get('button[type="submit"]').click();
-        cy.get('span[class="success"]').should('be.visible'); 
-        //outra forma de chamar uma classe é assim: cy.get('.sucess').should('be.visible'); 
+        cy.get('span[class="success"]').should('be.visible'); //outra forma de chamar uma classe é assim: cy.get('.sucess').should('be.visible'); 
+        
+        cy.tick(3000);
+        
+        cy.contains('.success', 'Mensagem enviada com sucesso').should('not.be.visible') // verificação de que a mensagem de sucessso não está mais visível
+        
     })
 
     it('exibe mensagem de erro ao submeter o formulário com um email com formatação inválida', function() {
+        cy.clock();
+
         cy.get('input[id="firstName"]').type('Ana');
         cy.get('input[id="lastName"]').type('Mala');
         cy.get('input[id="email"]').type('ee.com');
         cy.get('textarea[id="open-text-area"]').type('test');
         cy.get('button[type="submit"]').click();
         cy.get('.error').should('be.visible');
+
+        cy.tick(3000);
+
+        cy.get('.error').should('not.be.visible');
     })
 
     it('validar que, se um valor não-numérico for digitado, seu valor continuará vazio', function() {
@@ -47,14 +60,19 @@ describe('Central de Atendimento ao Cliente TAT', function() {
     })
 
     it('exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário', function() {
+        cy.clock();
+
         cy.get('input[id="firstName"]').type('Ana');
         cy.get('input[id="lastName"]').type('Mala');
         cy.get('input[id="email"]').type('e@e.com');
         cy.get('#phone-checkbox').click();
         cy.get('textarea[id="open-text-area"]').type('test');
         cy.get('button[type="submit"]').click();
-        cy.get('.error').should('be.visible');
-        //cy.get('.phone-label-span required-mark').should
+        cy.get('.error').should('be.visible'); //cy.get('.phone-label-span required-mark').should
+
+        cy.tick(3000);
+
+        cy.get('.error').should('not.be.visible');
     })
 
     it('preenche e limpa os campos nome, sobrenome, email e telefone', function() {
@@ -82,20 +100,39 @@ describe('Central de Atendimento ao Cliente TAT', function() {
     })
 
     it('exibe mensagem de erro ao submeter o formulário sem preencher os campos obrigatórios', function() {
+        cy.clock();
+        
         cy.get('button[type="submit"]').click();
         cy.get('.error').should('be.visible');
+
+        cy.tick(3000);
+
+        cy.get('.error').should('not.be.visible');
     })
 
     it('envia o formulário com sucesso usando um comando customizado', function() {
+        cy.clock();  
+
         cy.fillMandatoryFieldsAndSubmit();
         cy.get('button[type="submit"]').click();
         cy.get('.success').should('be.visible');
+
+        cy.tick(3000);
+
+        cy.get('.success').should('not.be.visible');
     })
 
     it('primeiro uso do cy-contains', function() {
+        cy.clock();  
+
         cy.fillMandatoryFieldsAndSubmit();
         cy.contains('button', 'Enviar').click();
         cy.get('.success').should('be.visible');
+        
+        cy.tick(3000);
+
+        cy.get('.success').should('not.be.visible');
+
     })
 
     it('teste do comado select: seleciona um produto (YouTube) por seu texto', function() {
