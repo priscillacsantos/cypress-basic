@@ -1,7 +1,7 @@
 {
   "name": "curso-cypress",
   "version": "1.0.0",
-  "description": "Repositório de teste básico em Cypress ",
+  "description": "Repository of basics tests in Cypress",
   "main": "src/index.html",
   "scripts": {
     "cy:open": "cypress open",
@@ -11,13 +11,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/priscillacsantos/cypress-basico.git"
+    "url": "git+https://github.com/priscillacsantos/cypress-basic.git"
   },
   "keywords": [
     "Testing"
   ],
   "license": "MIT",
-  "homepage": "https://github.com/priscillacsantos/cypress-basico#readme",
+  "homepage": "https://github.com/priscillacsantos/cypress-basic#readme",
   "devDependencies": {
     "cypress": "^9.5.1"
   }

@@ -1,4 +1,4 @@
-# Automated Testing with Cypress - Basics
+# Automated Testing with Cypress - Basic
 
 This project was created for the practical application of the basic concepts of the Cypress automation framework. Based on a course on Udemy.
 
